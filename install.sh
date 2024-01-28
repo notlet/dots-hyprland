@@ -93,6 +93,14 @@ if $(test -d /usr/local/share/icons/OneUI); then
 else ask_OneUI=true
 fi
 if $ask_OneUI;then showfun install-OneUI;v install-OneUI;fi
+
+if $(test -d $HOME/.oh-my-zsh); then
+  echo -e "\e[33m[$0]: OhMyZsh directory already exists, no need to install.\e[0m"
+  echo -e "\e[34mYou can reinstall it in order to update to the latest version anyway.\e[0m"
+  ask_zsh=$ask
+else ask_zsh=true
+fi
+if $ask_zsh;then showfun install-zsh;v install-zsh;fi
 #####################################################################################
 printf "\e[36m[$0]: 3. Copying\e[97m\n"
 
