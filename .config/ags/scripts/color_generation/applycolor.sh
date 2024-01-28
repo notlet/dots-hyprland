@@ -83,20 +83,49 @@ apply_fuzzel() {
     done
 }
 
-apply_foot() {
-    # Check if scripts/templates/foot/foot.ini exists
-    if [ ! -f "scripts/templates/foot/foot.ini" ]; then
-        echo "Template file not found for Foot. Skipping that."
+apply_kitty() {
+    if [ ! -f "scripts/templates/kitty/kitty.conf" ]; then
+        echo "Template file not found for Kitty. Skipping that."
         return
     fi
     # Copy template
-    cp "scripts/templates/foot/foot.ini" "$HOME/.config/foot/foot_new.ini"
+    cp "scripts/templates/kitty/kitty.conf" "$HOME/.config/kitty/kitty_new.conf"
     # Apply colors
     for i in "${!colorlist[@]}"; do
-        sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$HOME/.config/foot/foot_new.ini" # note: ff because theyre opaque
+        sed -i "s/${colorlist[$i]} #/#${colorvalues[$i]#\#}/g" "$HOME/.config/kitty/kitty_new.conf"
     done
 
-    cp "$HOME/.config/foot/foot_new.ini" "$HOME/.config/foot/foot.ini"
+    cp "$HOME/.config/kitty/kitty_new.conf" "$HOME/.config/kitty/kitty.conf"
+}
+
+apply_vis() {
+    if [ ! -f "scripts/templates/vis/material" ]; then
+        echo "Template file not found for cli-visualizer colors. Skipping that."
+        return
+    fi
+    # Copy template
+    cp "scripts/templates/vis/material" "$HOME/.config/vis/colors/material_new"
+    # Apply colors
+    for i in "${!colorlist[@]}"; do
+        sed -i "s/{{ ${colorlist[$i]} }}/${colorvalues[$i]#\#}/g" "$HOME/.config/vis/colors/material_new"
+    done
+    
+    cp "$HOME/.config/vis/colors/material_new" "$HOME/.config/vis/colors/material"
+}
+
+apply_cava() {
+    if [ ! -f "scripts/templates/cava/config" ]; then
+        echo "Template file not found for cava colors. Skipping that."
+        return
+    fi
+    # Copy template
+    cp "scripts/templates/cava/config" "$HOME/.config/cava/config_new"
+    # Apply colors
+    for i in "${!colorlist[@]}"; do
+        sed -i "s/{{ ${colorlist[$i]} }}/${colorvalues[$i]#\#}/g" "$HOME/.config/cava/config_new"
+    done
+    
+    cp "$HOME/.config/cava/config_new" "$HOME/.config/cava/config"
 }
 
 apply_hyprland() {
@@ -147,9 +176,13 @@ apply_ags() {
     ags run-js "App.resetCss(); App.applyCss('${HOME}/.config/ags/style.css');"
 }
 
+# apply_svgs
 apply_ags &
 apply_hyprland &
 apply_gtk &
 apply_gtklock &
 apply_fuzzel &
+apply_vis &
+apply_cava &
+apply_kitty &
 apply_foot
