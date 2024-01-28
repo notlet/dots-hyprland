@@ -73,6 +73,9 @@ install-OneUI () {
 install-zsh () { # should work idk
   x cp $base/.config/.zshrc $HOME/.zshrc
   x cp $base/.config/.p10k.zsh $HOME/.p10k.zsh
+  x echo "=============================================="
+  x echo "OhMyZsh installer drops you into a shell, please press Ctrl+D to resume the installation."
+  x echo "=============================================="
   x sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   x git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
   x git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
