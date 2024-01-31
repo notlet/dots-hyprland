@@ -1,4 +1,4 @@
-​#!/usr/bin/bash
+#!/bin/bash
 
 # Set device to be toggled
 HYPRLAND_DEVICE="uniw0001:00-093a:0255-touchpad"
